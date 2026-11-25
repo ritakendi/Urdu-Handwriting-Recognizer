@@ -1,0 +1,22 @@
+# Keep the working schedule private to this checkout.
+PROJECT_PLAN.md
+
+# Datasets and generated training outputs
+data/
+artifacts/
+*.keras
+*.h5
+*.npz
+
+# Android Studio / Gradle machine-local and generated files
+**/.idea/
+**/.kotlin/
+**/.gradle/
+**/build/
+**/local.properties
+
+# Python environments and generated files
+.venv/
+__pycache__/
+*.py[cod]
+.DS_Store
