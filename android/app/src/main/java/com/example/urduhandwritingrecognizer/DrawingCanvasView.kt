@@ -33,4 +33,8 @@ class DrawingCanvasView(context: Context) : View(context) {
         }
         return true
     }
+    fun clearCanvas() {
+        path.reset()
+        invalidate()
+    }
 }
