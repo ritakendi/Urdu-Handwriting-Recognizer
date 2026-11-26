@@ -19,9 +19,16 @@ class MainActivity : AppCompatActivity() {
                 drawingCanvas.clearCanvas()
             }
         }
+        val undoButton = Button(this).apply {
+            text = "Undo"
+            setOnClickListener {
+                drawingCanvas.undoLastStroke()
+            }
+        }
 
         val screen = LinearLayout(this).apply {
             orientation = LinearLayout.VERTICAL
+            addView(undoButton)
             addView(clearButton)
             addView(
                 drawingCanvas,

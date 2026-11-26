@@ -12,9 +12,12 @@ class DrawingCanvasView(context: Context) : View(context) {
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         canvas.drawColor(Color.WHITE)
-        canvas.drawPath(path, paint)
+        for (stroke in strokes) {
+            canvas.drawPath(stroke, paint)
+        }
     }
-    private val path = Path()
+    private val strokes = mutableListOf<Path>()
+    private var currentStroke: Path? = null
 
     private val paint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         color = Color.BLACK
@@ -25,16 +28,34 @@ class DrawingCanvasView(context: Context) : View(context) {
     }
     override fun onTouchEvent(event: MotionEvent): Boolean {
         when (event.action) {
-            MotionEvent.ACTION_DOWN -> path.moveTo(event.x, event.y)
+            MotionEvent.ACTION_DOWN -> {
+                val stroke = Path()
+                stroke.moveTo(event.x, event.y)
+                strokes.add(stroke)
+                currentStroke = stroke
+            }
+
             MotionEvent.ACTION_MOVE -> {
-                path.lineTo(event.x, event.y)
+                currentStroke?.lineTo(event.x, event.y)
                 invalidate()
+            }
+
+            MotionEvent.ACTION_UP -> {
+                currentStroke = null
             }
         }
         return true
     }
     fun clearCanvas() {
-        path.reset()
+        strokes.clear()
+        currentStroke = null
+        invalidate()
+    }
+    fun undoLastStroke() {
+        if (strokes.isNotEmpty()) {
+            strokes.removeAt(strokes.lastIndex)
+        }
+        currentStroke = null
         invalidate()
     }
 }
