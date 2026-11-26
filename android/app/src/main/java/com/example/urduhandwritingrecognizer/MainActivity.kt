@@ -15,6 +15,6 @@ class MainActivity : AppCompatActivity() {
             gravity = Gravity.CENTER
         }
 
-        setContentView(welcomeMessage)
+        setContentView(DrawingCanvasView(this))
     }
 }
